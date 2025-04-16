@@ -1,4 +1,4 @@
-import { ArrayMinSize, IsArray, IsDate, IsInt, IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl, MaxLength, Min, ValidateNested } from "class-validator";
+import { ArrayMinSize, IsArray, IsDate, IsInt, IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl, IsUUID, MaxLength, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 export class characteristicsProductDTO {
@@ -18,6 +18,9 @@ export class imagesProductDTO {
 }
 
 export class createProductDTO {
+
+    @IsUUID()
+    userId: string;
 
     @IsNotEmpty()
     name: string;
