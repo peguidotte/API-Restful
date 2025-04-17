@@ -21,17 +21,24 @@ export class UserController {
         userEntity.password = user.password
         userEntity.id = uuid()
         this.userRepository.save(userEntity)
-        return { user: new ListUserDTO(userEntity.id, userEntity.name), message: "user created" }
+        return { user: new ListUserDTO(userEntity.id, userEntity.name, userEntity.email), message: "user created" }
     }
 
     @Get()
     async listUsers() {
         const savedUsers =  await this.userRepository.listAll()
-        const users = savedUsers.map(user => new ListUserDTO(user.id, user.name))
+        const users = savedUsers.map(user => new ListUserDTO(user.id, user.name, user.email))
         return users
     }
 
     @Put(":id")
-    async updateUser(@Param('id') id: string, @Body() dataToUpdate: UpdateUserDTO) {}
+    async updateUser(@Param('id') id: string, @Body() dataToUpdate: UpdateUserDTO) {
+        const userUpdated = await this.userRepository.update(id, dataToUpdate)
+        return {
+            user: userUpdated,
+            message: "user updated"
+        }
+
+    }
 
 }

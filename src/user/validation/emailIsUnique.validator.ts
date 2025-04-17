@@ -9,7 +9,8 @@ export class EmailIsUniqueValidator implements ValidatorConstraintInterface {
     constructor(private userRepository: userRepository) { }
 
     async validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> {
-        const userExists = await this.userRepository.existentEmail(value);
+        const id = validationArguments?.object['id'];
+        const userExists = await this.userRepository.existentEmail(value, id);
         return !userExists;
     }
 
