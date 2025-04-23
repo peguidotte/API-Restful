@@ -3,7 +3,7 @@ import { ProductEntity } from "./product.entity";
 
 @Entity({ name: 'product_features' })
 export class ProductFeatureEntity {
-    
+
     @PrimaryColumn({ name: 'id', type: 'uuid' })
     id: string;
 
@@ -13,6 +13,6 @@ export class ProductFeatureEntity {
     @Column({ name: 'description', type: 'text', nullable: false })
     description: string;
 
-    @ManyToOne(() => ProductEntity, (product) => product.features)
+    @ManyToOne(() => ProductEntity, (product) => product.features, { orphanedRowAction: 'delete', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     product: ProductEntity;
 }

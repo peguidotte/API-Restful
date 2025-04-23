@@ -27,10 +27,12 @@ export class ProductEntity {
     @Column({ name: 'category', length: 50, nullable: false })
     category: string;
 
-    @OneToMany(() => ProductFeatureEntity, productFeatureEntity => productFeatureEntity.product)
+    @OneToMany(() => ProductFeatureEntity, productFeatureEntity => productFeatureEntity.product, 
+    { cascade: true, eager: true})
     features: ProductFeatureEntity[];
 
-    @OneToMany(() => ProductImageEntity, productImageEntity => productImageEntity.product)
+    @OneToMany(() => ProductImageEntity, productImageEntity => productImageEntity.product, 
+    { cascade: true, eager: true})
     images: ProductImageEntity[];
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
