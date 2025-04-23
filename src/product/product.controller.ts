@@ -23,6 +23,8 @@ export class ProductController {
         product.category = dataProduct.category;
         product.quantity = dataProduct.quantity;
         product.userId = dataProduct.userId;
+        product.features = dataProduct.features;
+        product.images = dataProduct.images;
 
         const newProduct = await this.ProductService.createProduct(product);
         return newProduct

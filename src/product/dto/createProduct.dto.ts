@@ -1,21 +1,7 @@
 import { ArrayMinSize, IsArray, IsDate, IsInt, IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl, IsUUID, MaxLength, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
-
-export class characteristicsProductDTO {
-    @IsNotEmpty()
-    name: string;
-
-    @IsNotEmpty()
-    description: string;
-}
-
-export class imagesProductDTO {
-    @IsUrl()
-    url: string;
-
-    @IsString()
-    description: string;
-}
+import { featuresProductDTO } from "./featuresProduct.dto";
+import { imagesProductDTO } from "./imagesProduct.dto";
 
 export class createProductDTO {
 
@@ -40,8 +26,8 @@ export class createProductDTO {
     @ValidateNested()
     @IsArray()
     @ArrayMinSize(2)
-    @Type(() => characteristicsProductDTO)
-    characteristics: characteristicsProductDTO[];
+    @Type(() => featuresProductDTO)
+    features: featuresProductDTO[];
 
     @ValidateNested()
     @IsArray()
