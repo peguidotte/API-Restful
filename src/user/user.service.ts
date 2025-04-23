@@ -24,11 +24,10 @@ export class UserService {
     }
 
     async updateUser(id: string, dataToUpdate: UpdateUserDTO) {
-        const userUpdated = await this.userRepository.update(id, dataToUpdate)
-        
+        await this.userRepository.update(id, dataToUpdate)
     }
 
     async deleteUser(id: string) {
-        const user = await this.userRepository.delete(id)
+        await this.userRepository.delete(id)
     }
 }

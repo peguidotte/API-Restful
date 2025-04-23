@@ -27,11 +27,11 @@ export class createProductDTO {
 
     @IsNumber({ maxDecimalPlaces: 2 })
     @IsPositive()
-    value: number;
+    price: number;
 
     @IsInt()
     @Min(0)
-    quantity: Int32Array;
+    quantity: number;
 
     @IsNotEmpty()
     @MaxLength(1000)
