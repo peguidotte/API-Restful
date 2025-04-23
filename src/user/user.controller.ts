@@ -1,17 +1,20 @@
-
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { userRepository } from "./user.repository";
+import { UserRepository } from "./user.repository";
 import { createUserDTO } from "./dto/createUser.dto";
 import { UserEntity } from "./user.entity";
 import { v4 as uuid } from "uuid";
 import { ListUserDTO } from "./dto/listUser.dto";
 import { UpdateUserDTO } from "./dto/updateUser.dto";
+import { UserService } from "./user.service";
 
 
 @Controller("/users")
 export class UserController {
 
-    constructor(private userRepository: userRepository) {}
+    constructor(
+        private userRepository: UserRepository,
+        private UserService: UserService
+    ) {}
 
     @Post()
     async createUser(@Body() user: createUserDTO) {
@@ -20,20 +23,19 @@ export class UserController {
         userEntity.email = user.email
         userEntity.password = user.password
         userEntity.id = uuid()
-        this.userRepository.save(userEntity)
+        this.UserService.createUser(userEntity)
         return { user: new ListUserDTO(userEntity.id, userEntity.name, userEntity.email), message: "user created" }
     }
 
     @Get()
     async listUsers() {
-        const savedUsers =  await this.userRepository.listAll()
-        const users = savedUsers.map(user => new ListUserDTO(user.id, user.name, user.email))
-        return users
+        const savedUsers =  await this.UserService.listUsers()
+        return savedUsers
     }
 
     @Put(":id")
     async updateUser(@Param('id') id: string, @Body() dataToUpdate: UpdateUserDTO) {
-        const userUpdated = await this.userRepository.update(id, dataToUpdate)
+        const userUpdated = await this.UserService.updateUser(id, dataToUpdate)
         return {
             user: userUpdated,
             message: "user updated"
@@ -42,7 +44,7 @@ export class UserController {
 
     @Delete(":id")
     async deleteUser(@Param('id') id: string) {
-        const user = await this.userRepository.delete(id)
+        const user = await this.UserService.deleteUser(id)
         return {
             user: user,
             message: "user deleted"
